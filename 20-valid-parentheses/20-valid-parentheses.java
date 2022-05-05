@@ -1,3 +1,5 @@
+// for every opening parenthesis, push a corresponding closing paranthesis on the stack. And remove when one is found in the String
+
 class Solution {
     public boolean isValid(String s) {
         
