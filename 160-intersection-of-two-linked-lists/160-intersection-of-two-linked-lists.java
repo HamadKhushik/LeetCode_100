@@ -21,8 +21,8 @@ public class Solution {
         
         while (l1 != l2){
             
-            l1 = l1 == null ? headA : l1.next;
-            l2 = l2 == null ? headB : l2.next;
+            l1 = l1 == null ? headB : l1.next;
+            l2 = l2 == null ? headA : l2.next;
         }
         return l1;
     }
