@@ -12,6 +12,10 @@
 public class Solution {
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
         
+        if (headA == null || headB == null){
+            return null;
+        }
+        
         ListNode l1 = headA;
         ListNode l2 = headB;
         
