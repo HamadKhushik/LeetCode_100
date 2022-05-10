@@ -3,19 +3,19 @@
 class Solution {
     public int majorityElement(int[] nums) {
         
-        int count = 0;
-        int ret = 0;
+        int count = 1;
+        int max = nums[0];
         
-        for (int num : nums){
+        for (int i = 1; i < nums.length; i++){
             if (count == 0){
-                ret = num;
+                max = nums[i];
                 count++;
-            } else if (ret == num){
+            } else if (max == nums[i]){
                 count++;
             } else {
                 count--;
             }
         }
-        return ret;
+        return max;
     }
 }
