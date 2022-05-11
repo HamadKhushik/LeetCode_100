@@ -13,28 +13,28 @@
  *     }
  * }
  */
+
+// Solution based on DFS
 class Solution {
-   /* public TreeNode invertTree(TreeNode root) {
-        return invert(root);
-    }
-    
-    public TreeNode invert(TreeNode root){
-        if (root == null){
-            return null;
-        }
-        final TreeNode left = root.left;
-        final TreeNode right = root.right;
-        root.left = invert(right);
-        root.right = invert(left);
-        
-        return root;
-    }*/
-    
     public TreeNode invertTree(TreeNode root) {
-        if (root == null) return null;
-        TreeNode tempRight = root.right;
-        root.right = invertTree(root.left);
-        root.left = invertTree(tempRight);
+        if (root == null){
+            return root;
+        }
+        Deque<TreeNode> stack = new LinkedList<TreeNode>();
+        stack.push(root);
+        while (!stack.isEmpty()){
+            TreeNode node = stack.pop();
+            TreeNode left = node.left;
+            node.left = node.right;
+            node.right = left;
+            
+            if(node.left != null){
+                stack.push(node.left);
+            }
+            if (node.right != null){
+                stack.push(node.right);
+            }
+        }
         return root;
     }
 }
