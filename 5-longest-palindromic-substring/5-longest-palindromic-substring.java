@@ -1,7 +1,5 @@
+// solution without instance variables
 class Solution {
-    int lo;
-    int maxLength;
-    
     public String longestPalindrome(String s) {
         int len = s.length();
         String s3 = "";
@@ -9,23 +7,21 @@ class Solution {
             return s;
         }
         for(int i = 0; i < len-1; i++){
-            palindrome(s, i, i);  // if string length is odd
-            palindrome(s, i, i+1);  // if string length is even
+            String s1 = palindrome(s, i, i);  // if string length is odd
+            String s2 = palindrome(s, i, i+1);  // if string length is even
             
+            if (s1.length() > s3.length()){ s3 = s1;}
+            if (s2.length() > s3.length()){ s3 = s2;}
         }
-        return s.substring(lo, lo + maxLength);
+        return s3;
     }
     
-    private void palindrome(String s, int j, int k){
+    private String palindrome(String s, int j, int k){
         
         while(j >= 0 && k < s.length() && s.charAt(j) == s.charAt(k)){
             j--;
             k++;
         }
-        if (maxLength < k - j -1){
-            lo = j + 1;
-            maxLength = k - j - 1;
-        }
-        
+        return s.substring(j+1, k);
     }
 }
