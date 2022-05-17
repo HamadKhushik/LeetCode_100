@@ -6,8 +6,8 @@ class Solution {
         int maxArea = Integer.MIN_VALUE;
         
         while (left < right){
-            int currArea = Math.min(height[left], height[right]) * (right - left);
-            maxArea = Math.max(maxArea, currArea);
+            //int currArea = Math.min(height[left], height[right]) * (right - left);
+            maxArea = Math.max(maxArea, Math.min(height[left], height[right]) * (right - left));
             
             if (height[left] < height[right]){
                 left++;
