@@ -1,26 +1,27 @@
-// recursive solution
+// using BFS queue
 
 class Solution {
     public List<String> letterCombinations(String digits) {
         
-        List<String> result = new ArrayList<>();
+        LinkedList<String> result = new LinkedList<>();
         if (digits == null || digits.length() == 0){
             return result;
         }
         String[] mapping = new String[]{"0", "1", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
-        getCombinations(result, digits, "", 0, mapping);
-        return result;
-    }
-    
-    private void getCombinations(List<String> result, String digits, String current, int index, String[] mapping){
-        if (index == digits.length()){
-            result.add(current);
-            return;
-        }
         
-        String letters = mapping[digits.charAt(index) - '0'];
-        for (int i = 0; i < letters.length(); i++){
-            getCombinations(result, digits, current + letters.charAt(i), index+1, mapping);
+        result.add("");
+        
+        for (int i = 0; i < digits.length(); i++){
+            int x = digits.charAt(i) - '0';
+            
+            while (result.peek().length() == i){
+                String t = result.remove();
+                
+                for (char c : mapping[x].toCharArray()){
+                    result.add(t + c);
+                }
+            }
         }
+        return result;
     }
 }
