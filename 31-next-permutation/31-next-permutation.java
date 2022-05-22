@@ -8,7 +8,7 @@ class Solution {
         while (i > 0 && nums[i - 1] >= nums[i]){
             i--;
         }
-        if (i <= 0){
+        if (i <= 0){  // if the array is sorted in descending order, return the array in ascending order
             sort(nums, 0, nums.length - 1);
             return;
         }
@@ -28,6 +28,8 @@ class Solution {
         return;
     }
     
+    // sorts the ascending array in descending order or descending array in ascending order
+    // n/2 approach
     private void sort(int[] nums, int start, int end){
         while (start < end){
             int temp = nums[start];
