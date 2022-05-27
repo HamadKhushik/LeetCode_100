@@ -2,13 +2,14 @@
 
 class Solution {
     public boolean canJump(int[] nums) {
-        int lastValidIndex = nums.length - 1;
+        int max = 0;
         
-        for (int i = nums.length - 1; i>=0; i--){
-            if (i + nums[i] >= lastValidIndex){
-                lastValidIndex = i;
+        for (int i = 0; i < nums.length; i++){
+            if (i > max){
+                return false;
             }
+            max = Math.max(i + nums[i], max); 
         }
-        return lastValidIndex == 0;
+        return true;
     }
 }
