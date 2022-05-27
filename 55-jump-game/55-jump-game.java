@@ -1,13 +1,14 @@
+// starting from the last index
+
 class Solution {
     public boolean canJump(int[] nums) {
-        int max = 0;
+        int lastValidIndex = nums.length - 1;
         
-        for (int i = 0; i < nums.length; i++){
-            if (i > max){
-                return false;
+        for (int i = nums.length - 1; i>=0; i--){
+            if (i + nums[i] >= lastValidIndex){
+                lastValidIndex = i;
             }
-            max = Math.max(i + nums[i] , max);
         }
-        return true;
+        return lastValidIndex == 0;
     }
 }
