@@ -15,10 +15,7 @@
  */
 class Solution {
     public boolean isValidBST(TreeNode root) {
-        
-        if (root == null){
-            return true;
-        }
+
         Stack<TreeNode> stack = new Stack<>();
         TreeNode pre = null;
         
