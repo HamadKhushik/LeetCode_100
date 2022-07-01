@@ -21,27 +21,26 @@ class Solution {
         }
         
         HashMap<Node, Node> map = new HashMap<>();
-        Node head2 = head;
-        Node clone_head = new Node(head2.val);
-        map.put(head2, clone_head);
-        head2 = head2.next;
-        
-        while(head2 != null){
-            Node curr = new Node(head2.val);
-            map.put(head2, curr);
-            head2 = head2.next;
+        Node iter = head;
+        // first pass, build the map of the nodes
+        while(iter != null){
+            Node curr = new Node(iter.val);
+            map.put(iter, curr);
+            iter = iter.next;
         }
         
-        head2 = head;
-        while(head2 != null){
-            Node head2_next = head2.next;
-            Node head2_random = head2.random;
-            Node clone = map.get(head2);
-            clone.next = map.get(head2.next);
-            clone.random = map.get(head2.random);
+        iter = head;
+        // second pass, build the connections/pointers of the nodes
+        while(iter != null){
+            Node iter_next = iter.next;
+            Node iter_random = iter.random;
+            Node copy = map.get(iter);
+            copy.next = map.get(iter.next);
+            copy.random = map.get(iter.random);
             
-            head2 = head2.next;
+            iter = iter.next;
         }
-        return clone_head;
+        // Node pseudohead = map.get(head); // return the copied head from map
+        return map.get(head);
     }
 }
