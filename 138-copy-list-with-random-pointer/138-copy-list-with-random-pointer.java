@@ -15,32 +15,45 @@ class Node {
 
 class Solution {
     public Node copyRandomList(Node head) {
-        
-        if (head == null){
+        if (head == null)
             return null;
-        }
         
-        HashMap<Node, Node> map = new HashMap<>();
-        Node iter = head;
-        // first pass, build the map of the nodes
+        Node iter = head; 
+        Node next = null;
+        // first pass, copy the nodes
         while(iter != null){
-            Node curr = new Node(iter.val);
-            map.put(iter, curr);
-            iter = iter.next;
+            next = iter.next;
+            
+            Node copy = new Node(iter.val);
+            iter.next = copy;
+            copy.next = next;
+            
+            iter = next;
         }
         
         iter = head;
-        // second pass, build the connections/pointers of the nodes
+        // second pass, make the random connections/pointers
         while(iter != null){
-            Node iter_next = iter.next;
-            Node iter_random = iter.random;
-            Node copy = map.get(iter);
-            copy.next = map.get(iter.next);
-            copy.random = map.get(iter.random);
-            
-            iter = iter.next;
+            if(iter.random != null){
+                iter.next.random = iter.random.next;
+            }
+            iter = iter.next.next;
         }
-        // Node pseudohead = map.get(head); // return the copied head from map
-        return map.get(head);
+        
+        iter = head;
+        Node pseudohead = new Node(0);
+        Node copy, copyIter = pseudohead;
+        // third pass, separate the two lists
+        while (iter != null){
+            next = iter.next.next;
+            
+            copy = iter.next;
+            copyIter.next = copy;
+            copyIter = copy;
+            
+            iter.next = next;
+            iter = next;
+        }
+        return pseudohead.next;
     }
 }
