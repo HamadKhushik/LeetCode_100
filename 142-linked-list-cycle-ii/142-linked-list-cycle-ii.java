@@ -29,13 +29,12 @@ public class Solution {
         
         slow = head;
         
-        if(isCycle){
-            while(slow != fast){
-                slow = slow.next;
-                fast = fast.next;
-            }
-            return slow;
+        if(!isCycle)
+            return null;
+        while(slow != fast){
+            slow = slow.next;
+            fast = fast.next;
         }
-        return null;
+        return slow;
     }
 }
