@@ -8,51 +8,94 @@
  *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
+
+// Iterative solution with constant space complexity
 class Solution {
+    ListNode tail = new ListNode();
+    ListNode nextSubList = new ListNode();
+    
     public ListNode sortList(ListNode head) {
-                if(head == null || head.next == null){
+        if (head == null || head.next == null){
             return head;
         }
         
-        ListNode temp = head;
-        ListNode slow = head;
-        ListNode fast = head;
-        
-        while (fast != null && fast.next != null){
-            temp = slow;
-            slow = slow.next;
-            fast = fast.next.next;
+        ListNode start = head;
+        ListNode dummyHead = new ListNode();
+        int len = getCount(start);
+        for (int size = 1; size < len; size*= 2){
+            tail = dummyHead;
+            while (start != null){
+                if (start.next == null){
+                    tail.next = start;
+                    break;
+                }
+                ListNode mid = split(start, size);
+                merge(start, mid);
+                start = nextSubList;
+            }
+            start = dummyHead.next;
         }
-        temp.next = null;
-        
-        ListNode left_list = sortList(head);
-        ListNode right_list = sortList(slow);
-        
-        return merge(left_list, right_list);
+        return dummyHead.next;
     }
     
-    public ListNode merge(ListNode l1, ListNode l2){
-        ListNode curr_list = new ListNode(0);
-        ListNode curr_head = curr_list;
+    // split the list in 'size' chunks
+    private ListNode split(ListNode start, int size){
+        ListNode slow = start;
+        ListNode fast = start.next;
+        for (int i = 1; i < size && (slow.next != null || fast.next != null); i++){
+            
+            if(fast.next != null){
+                fast = fast.next.next != null ? fast.next.next : fast.next;
+            }
+            if (slow.next != null){
+                slow = slow.next;
+            }
+        }
+        ListNode mid = slow.next;
+        slow.next = null;
+        nextSubList = fast.next;
+        fast.next = null;
+        
+        return mid;
+    }
+    // merge the two lists in sorted order 
+    private void merge(ListNode l1, ListNode l2){
+        
+        ListNode dummyHead2 = new ListNode();
+        ListNode newTail = dummyHead2;
         
         while (l1 != null && l2 != null){
             if (l1.val < l2.val){
-                curr_list.next = l1;
+                newTail.next = l1;
                 l1 = l1.next;
             } else {
-                curr_list.next = l2;
+                newTail.next = l2;
                 l2 = l2.next;
             }
-            curr_list = curr_list.next;
+            newTail = newTail.next;
         }
         
         if (l1 != null){
-            curr_list.next = l1;
+            newTail.next = l1;
+        }else {
+            newTail.next = l2;
         }
         
-        if (l2 != null){
-            curr_list.next = l2;
+        while(newTail.next != null){
+            newTail = newTail.next;
         }
-        return curr_head.next;
+        
+        tail.next = dummyHead2.next;
+        tail = newTail;
+        
+    }
+    
+    private int getCount(ListNode head){
+        int count = 0;
+        while (head != null){
+            head = head.next;
+            count++;
+        }
+        return count;
     }
 }
