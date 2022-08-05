@@ -17,15 +17,15 @@ class Solution {
         return numIslands;
     }
     
-    private void doBFS(char[][] grid, int start, int end){
-        if (start < 0 || start >= grid.length || end < 0 || end >= grid[start].length || grid[start][end] == '0'){
+    private void doBFS(char[][] grid, int row, int column){
+        if (row < 0 || row >= grid.length || column < 0 || column >= grid[row].length || grid[row][column] == '0'){
             return;
         }
         
-        grid[start][end] = '0';
-        doBFS(grid, start + 1, end);
-        doBFS(grid, start - 1, end);
-        doBFS(grid, start, end + 1);
-        doBFS(grid, start, end - 1);
+        grid[row][column] = '0';
+        doBFS(grid, row + 1, column);
+        doBFS(grid, row - 1, column);
+        doBFS(grid, row, column + 1);
+        doBFS(grid, row, column - 1);
     }
 }
