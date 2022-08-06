@@ -32,7 +32,7 @@ class Solution {
                     if (--inDegree[i] == 0){
                         queue.offer(i);
                     }
-                    matrix[current][i] = 0;
+//                    matrix[current][i] = 0;
                 }
             }
 //            for (int j = 0; j < inDegree.length; j++){
