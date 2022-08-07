@@ -1,8 +1,7 @@
 class Trie {
+    TrieNode root;
     
-    private TrieNode root;
-    
-    public Trie() {    
+    public Trie() {
         root = new TrieNode();
     }
     
@@ -11,23 +10,21 @@ class Trie {
         
         for (int i = 0; i < word.length(); i++){
             char ch = word.charAt(i);
-            
-            if (node.links[ch - 'a'] == null){
-                node.links[ch - 'a'] = new TrieNode(ch);
+            if (node.children[ch - 'a'] == null){
+                node.children[ch - 'a'] = new TrieNode(ch);
             }
-            node = node.links[ch - 'a'];
+            node = node.children[ch - 'a'];
         }
         node.isWord = true;
     }
-    
     
     public boolean search(String word) {
         TrieNode node = root;
         
         for (int i = 0; i < word.length(); i++){
             char ch = word.charAt(i);
-            if (node.links[ch - 'a'] != null){
-                node = node.links[ch - 'a'];
+            if (node.children[ch - 'a'] != null){
+                node = node.children[ch - 'a'];
             } else {
                 return false;
             }
@@ -40,8 +37,8 @@ class Trie {
         
         for (int i = 0; i < prefix.length(); i++){
             char ch = prefix.charAt(i);
-            if (node.links[ch - 'a'] != null){
-                node = node.links[ch - 'a'];
+            if (node.children[ch - 'a'] != null){
+                node = node.children[ch - 'a'];
             } else {
                 return false;
             }
@@ -52,12 +49,11 @@ class Trie {
     private class TrieNode {
         char val;
         boolean isWord;
-        TrieNode[] links = new TrieNode[26];
+        TrieNode[] children = new TrieNode[26];
         
         private TrieNode(){}
         private TrieNode(char c){
-            TrieNode node = new TrieNode();
-            node.val = c;
+            this.val = c;
         }
     }
 }
