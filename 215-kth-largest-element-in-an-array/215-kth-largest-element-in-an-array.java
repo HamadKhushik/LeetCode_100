@@ -5,7 +5,7 @@ class Solution {
         k = nums.length - k;
         int lo = 0; 
         int hi = nums.length - 1;
-        
+        shuffle(nums);
         while (lo < hi){
             final int j = partition(nums, lo, hi);
             
@@ -40,5 +40,13 @@ class Solution {
         int temp = nums[first];
         nums[first] = nums[second];
         nums[second] = temp;
+    }
+    
+    private void shuffle(int[] nums){
+        final Random random = new Random();
+        for (int i = 1; i < nums.length; i++){
+            int r = random.nextInt(i + 1);
+            swap(nums, i, r);
+        }
     }
 }
