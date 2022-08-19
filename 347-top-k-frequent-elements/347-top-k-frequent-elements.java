@@ -18,18 +18,22 @@ class Solution {
             list[frequency].add(key);
         }
         
-       List<Integer> res = new ArrayList<>();
+        int[] result = new int[k];
+        int index = 0;
         
-        for (int i = list.length-1; i>= 0 && res.size() < k; i--){
+        for (int i = list.length-1; i>= 0 && index < k; i--){
             if (list[i] != null){
-                res.addAll(list[i]);
+                for (int j : list[i]){
+                    result[index++] = j;
+                }
+                //res.addAll(list[i]);
             }
         }
         
         // convert the list in an array for compatible return type
-        int[] result = res.stream()
-                        .mapToInt(Integer::intValue)
-                        .toArray();
+        // int[] result = res.stream()
+        //                 .mapToInt(Integer::intValue)
+        //                 .toArray();
         return result;
     }
 }
