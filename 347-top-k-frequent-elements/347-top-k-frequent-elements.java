@@ -18,11 +18,12 @@ class Solution {
             list[frequency].add(key);
         }
         
-        int[] result = new int[k];
+        int[] result = new int[k];  // store the result in an array instead of list and then converting to array later
         int index = 0;
         
         for (int i = list.length-1; i>= 0 && index < k; i--){
             if (list[i] != null){
+                // add all elements of list[i] to result array, same as addAll(list)
                 for (int j : list[i]){
                     result[index++] = j;
                 }
