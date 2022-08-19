@@ -25,6 +25,8 @@ class Solution {
                 res.addAll(list[i]);
             }
         }
+        
+        // convert the list in an array for compatible return type
         int[] result = res.stream()
                         .mapToInt(Integer::intValue)
                         .toArray();
