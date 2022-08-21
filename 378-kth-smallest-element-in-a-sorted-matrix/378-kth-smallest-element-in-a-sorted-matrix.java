@@ -6,19 +6,17 @@ class Solution {
         int n = matrix.length;
         int min = matrix[0][0];
         int max = matrix[n-1][n-1];
-        int ans = -1;
         
-        while (min <= max){
+        while (min < max){
             int mid = min + (max - min)/2;
             int count = countLessOrEqual(matrix, mid);
             if (count < k){
                 min = mid + 1;
-            } else if (count >= k){
-                ans = mid;
-                max = mid - 1;
-            }  
+            } else {
+                max = mid;
+            } 
         }
-        return ans;
+        return min;
     }
     
     private int countLessOrEqual(int[][] matrix, int mid){
