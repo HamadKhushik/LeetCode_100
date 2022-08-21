@@ -7,7 +7,7 @@ class Solution {
         int min = matrix[0][0];
         int max = matrix[n-1][n-1];
         
-        while (min != max){
+        while (min < max){
             int mid = min + (max - min)/2;
             int count = countLessOrEqual(matrix, mid);
             if (count < k){
