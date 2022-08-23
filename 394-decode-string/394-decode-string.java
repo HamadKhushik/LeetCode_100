@@ -1,3 +1,5 @@
+// using StringBuilder instead of String for better performance
+
 class Solution {
     public String decodeString(String s) {
         
