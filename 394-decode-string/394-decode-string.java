@@ -3,38 +3,39 @@ class Solution {
         
         Stack<Integer> countStack = new Stack<>();
         Stack<String> resStack = new Stack<>();
-        int index = 0;
+        int idx = 0;
         String res = "";
         
-        while (index < s.length()){
+        while (idx < s.length()){
             
-            if (Character.isDigit(s.charAt(index))){
+            if (Character.isDigit(s.charAt(idx))){
                 int count = 0;
-                while (Character.isDigit(s.charAt(index))){
-                    count = 10 * count + s.charAt(index) - '0';
-                    index++;
+                while (Character.isDigit(s.charAt(idx))){
+                    count = 10 * count + s.charAt(idx) - '0';
+                    idx++;
                 }
                 countStack.push(count);
             }
             
-            else if (s.charAt(index) == '['){
+            else if (s.charAt(idx) == '['){
                 resStack.push(res);
                 res = "";
-                index++;
+                idx++;
             }
-            else if (s.charAt(index) == ']'){
+            
+            else if (s.charAt(idx) == ']'){
+                int repeatTimes = countStack.pop();
                 StringBuilder temp = new StringBuilder(resStack.pop());
-                int times = countStack.pop();
-                for (int i = 0; i < times; i++){
+                for (int i = 0; i < repeatTimes; i++){
                     temp.append(res);
                 }
-                index++;
                 res = temp.toString();
+                idx++;
             }
             else {
-                res += s.charAt(index);
-                index++;
-            }        
+                res += s.charAt(idx);
+                idx++;
+            }
         }
         return res;
     }
