@@ -15,12 +15,11 @@
  */
 class Solution {
     
-    int count = 0;
     public int pathSum(TreeNode root, int targetSum) {
         HashMap<Long, Integer> map = new HashMap<>();
         map.put(0L, 1);
-        
         return helper(root, 0, targetSum, map); 
+
  }
     
     private int helper(TreeNode root, long currSum, int target, HashMap<Long, Integer> map){
@@ -31,12 +30,12 @@ class Solution {
         
         currSum += root.val;
         
-        int result = map.getOrDefault(currSum - target, 0);
+        int count = map.getOrDefault(currSum - target, 0);
 
         map.put(currSum, map.getOrDefault(currSum, 0) + 1);
         
-        result += helper(root.left, currSum, target, map) + helper(root.right, currSum, target, map);
+        count += helper(root.left, currSum, target, map) + helper(root.right, currSum, target, map);
         map.put(currSum, map.get(currSum) - 1);
-        return result;
+        return count;
     }
 }
