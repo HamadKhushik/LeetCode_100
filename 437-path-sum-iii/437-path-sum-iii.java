@@ -14,35 +14,29 @@
  * }
  */
 class Solution {
-    int count = 0;
     
+    int count = 0;
     public int pathSum(TreeNode root, int targetSum) {
         HashMap<Long, Integer> map = new HashMap<>();
         map.put(0L, 1);
-        helper(root, 0, targetSum, map);
-        return count;
+        
+        return helper(root, 0, targetSum, map); 
  }
     
-    private void helper(TreeNode root, long currSum, int target, HashMap<Long, Integer> map){
+    private int helper(TreeNode root, long currSum, int target, HashMap<Long, Integer> map){
         
         if (root == null){
-            return;
+            return 0;
         }
         
         currSum += root.val;
         
-        if (map.containsKey(currSum - target)){
-            count += map.get(currSum - target);
-        }
+        int result = map.getOrDefault(currSum - target, 0);
+
+        map.put(currSum, map.getOrDefault(currSum, 0) + 1);
         
-        if (map.containsKey(currSum)){
-            map.put(currSum, map.get(currSum) + 1);
-        } else {
-            map.put(currSum, 1);
-        }
-        
-        helper(root.left, currSum, target, map);
-        helper(root.right, currSum, target, map);
+        result += helper(root.left, currSum, target, map) + helper(root.right, currSum, target, map);
         map.put(currSum, map.get(currSum) - 1);
+        return result;
     }
 }
