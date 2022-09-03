@@ -1,52 +1,47 @@
 class Solution {
     public List<Integer> findAnagrams(String s, String p) {
-                
+        
         List<Integer> result = new ArrayList<>();
-        int[] frequency = new int[26];
+        Map<Character, Integer> map = new HashMap<>();
         
         if (p.length() > s.length()){
             return result;
         }
         
+        // built frequency map
         for (char ch : p.toCharArray()){
-            frequency[ch - 'a']++;
+            map.put(ch, map.getOrDefault(ch, 0) + 1);
         }
         
-        int start = 0;
+        int start = 0; 
         int end = 0;
-        int len = p.length();
-        int counter = len;
-        
-        for (end = 0; end < len; end++){
-            char temp = s.charAt(end);
-            frequency[temp - 'a']--;
-            if (frequency[temp - 'a'] >= 0){
-                counter--;
-            }
-        }
-        
-        if (counter == 0){
-            result.add(start);
-        }
+        int counter = map.size();
         
         while (end < s.length()){
-            char temp = s.charAt(start);
-            if (frequency[temp - 'a'] >= 0){
-                counter++;
-            }
-            frequency[temp - 'a']++;
-            start++;
-            
-            temp = s.charAt(end);
-            frequency[temp - 'a']--;
-            if (frequency[temp - 'a'] >= 0){
-                counter--;
-            }
-            
-            if (counter == 0){
-                result.add(start);
+            char c = s.charAt(end);
+            if (map.containsKey(c)){
+                map.put(c, map.get(c) - 1);
+                if (map.get(c) == 0){
+                    counter--;
+                }
             }
             end++;
+            
+            // when all the chars in p has been discovered by 'end'
+            while (counter == 0){
+                char tempc = s.charAt(start);
+                if (map.containsKey(tempc)){
+                    map.put(tempc, map.get(tempc) + 1);
+                    if (map.get(tempc) > 0){
+                        counter++;
+                    }
+                }
+                
+                if (end - start == p.length()){
+                    result.add(start);
+                }
+                start++;
+            }
         }
         return result;
     }
