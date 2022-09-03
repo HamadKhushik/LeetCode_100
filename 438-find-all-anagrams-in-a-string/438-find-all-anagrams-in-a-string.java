@@ -1,48 +1,62 @@
+// simple and fast solution using an array as a map
 class Solution {
     public List<Integer> findAnagrams(String s, String p) {
         
         List<Integer> result = new ArrayList<>();
-        Map<Character, Integer> map = new HashMap<>();
+        int[] frequency = new int[26];  // 26 characters in alphabet
         
         if (p.length() > s.length()){
             return result;
         }
         
-        // built frequency map
         for (char ch : p.toCharArray()){
-            map.put(ch, map.getOrDefault(ch, 0) + 1);
+            frequency[ch - 'a']++;
         }
         
-        int start = 0; 
+        int counter = p.length();
+        int start = 0;
         int end = 0;
-        int counter = map.size();
+        
+        for (end = 0; end < p.length(); end++){
+            char ch = s.charAt(end);
+            frequency[ch - 'a']--;
+            if (frequency[ch - 'a'] >= 0){
+                counter--;
+            }
+        }
+        
+        if (counter == 0){
+            result.add(start);
+        }
         
         while (end < s.length()){
-            char c = s.charAt(end);
-            if (map.containsKey(c)){
-                map.put(c, map.get(c) - 1);
-                if (map.get(c) == 0){
-                    counter--;
-                }
+            char ch = s.charAt(start);
+            if (frequency[ch - 'a'] >= 0){
+                counter++;
             }
+            frequency[ch - 'a']++;
+            start++;
+            
+            ch = s.charAt(end);
+            frequency[ch - 'a']--;
+            if (frequency[ch - 'a'] >= 0){
+                counter--;
+            }      
             end++;
             
-            // when all the chars in p has been discovered by 'end'
-            while (counter == 0){
-                char tempc = s.charAt(start);
-                if (map.containsKey(tempc)){
-                    map.put(tempc, map.get(tempc) + 1);
-                    if (map.get(tempc) > 0){
-                        counter++;
-                    }
-                }
-                
-                if (end - start == p.length()){
-                    result.add(start);
-                }
-                start++;
+            if (counter == 0){
+                result.add(start);
             }
         }
         return result;
     }
 }
+
+
+
+
+
+
+
+
+
