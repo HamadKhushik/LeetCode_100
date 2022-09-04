@@ -2,7 +2,7 @@ class Solution {
     public List<Integer> partitionLabels(String s) {
         
         List<Integer> result = new ArrayList<>();
-        Map<Character, Integer> lastIndex = new HashMap<>();
+        int[] lastIndex = new int[26];
         
         if (s == null || s.length() == 0){
             return result;
@@ -10,7 +10,7 @@ class Solution {
         
         for (int i = 0; i < s.length(); i++){
             char ch = s.charAt(i);
-            lastIndex.put(ch, i);
+            lastIndex[ch - 'a'] = i;
         }
         
         int start = 0; 
@@ -18,7 +18,7 @@ class Solution {
         for (int i = 0; i < s.length(); i++){
             
             char ch = s.charAt(i);
-            end = Math.max(end, lastIndex.get(ch));
+            end = Math.max(end, lastIndex[ch - 'a']);
             if (i == end){
                 result.add(end - start + 1);
                 start = end + 1;
