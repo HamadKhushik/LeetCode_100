@@ -1,18 +1,22 @@
 // using Monotnic Stack - decreasing monotonic stack
+// using array as a stack, keeping track of the top index
+
+
 class Solution {
     public int[] dailyTemperatures(int[] temperatures) {
         
         int[] result = new int[temperatures.length];
-        Deque<Integer> stack = new ArrayDeque<>();
+        int[] stack = new int[temperatures.length];
+        int top = -1;   // keeps track of the current top(last used) index in array
         
         for (int i = 0; i < temperatures.length; i ++){
             
-            while (!stack.isEmpty() && temperatures[i] > temperatures[stack.peek()]){
-                int idx = stack.pop();
+            while (top >= 0 && temperatures[i] > temperatures[stack[top]]){
+                int idx = stack[top--];
                 result[idx] = i - idx;
             }
             
-            stack.push(i);
+            stack[++top] = i;
         }
         return result;
     }
