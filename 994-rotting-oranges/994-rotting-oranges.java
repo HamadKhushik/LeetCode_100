@@ -1,3 +1,5 @@
+// BFS based solution
+
 class Solution {
     public int orangesRotting(int[][] grid) {
         if (grid == null || grid.length == 0 ){
